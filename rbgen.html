@@ -1,0 +1,33 @@
+<html>
+<table id="Frame" style="background:silver" width=100% cellspacing=0 cellpadding=4>
+  <tr style="background:white" valign=top>
+    <td id="Frame.Nav" width=200px>
+      <table style="background:silver;" width=100% cellspacing=1 cellpadding=4>
+        <tr style="background:#E0E0E0;" valign=top>
+          <td style="padding:2px 6px 1px 6px">
+            <button id="RBG.Nav.Edit" type="button" onclick="RBG_Nav_OnClick(this)">Bearbeiten</button>
+
+          </td>
+        </tr>
+      </table>
+    </td>
+    <td id="Frame.Main">
+      <div id="RBG.Main.Default" style="width:100%;">RBG.Main.Default</div>
+    </td>
+  </tr>
+</table>
+<script src="/bogenwiki_lib/bw_libaux.js"></script>
+<script src="/bogenwiki_lib/bw_libdebug.js"></script>
+<script src="/bogenwiki_lib/bw_libgui.js"></script>
+<script src="/bogenwiki_bgf/src/bgf_btv.js"></script>
+<script src="/bogenwiki_bgf/src/bgf_lib.js"></script>
+<script>
+  BGF_BtV_ViewOptions.Templates.OnLoadFinished = BGFOnTemplatesLoaded;
+  BGF_BtV_ViewOptions.Templates.LoadFromFile("/bogenwiki_bgf/src/bgf_btv_templates.html");
+  BGFInit(wgUserName,wgUserGroups,BGF_BtV_DoRender);
+  window.onresize = BGF_BtV_OnWindowRezise;
+  window.addEventListener("storage", (e) => {
+    if (e.key == 'BGF_BTV_Filter') BGF_BtV_CheckCmdFromStorage();
+  });
+</script>
+</html>

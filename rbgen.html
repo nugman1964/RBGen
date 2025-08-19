@@ -16,18 +16,13 @@
     </td>
   </tr>
 </table>
-<script src="/bogenwiki_lib/bw_libaux.js"></script>
-<script src="/bogenwiki_lib/bw_libdebug.js"></script>
-<script src="/bogenwiki_lib/bw_libgui.js"></script>
-<script src="/bogenwiki_bgf/src/bgf_btv.js"></script>
-<script src="/bogenwiki_bgf/src/bgf_lib.js"></script>
+<script src="./lib/bw_libaux.js"></script>
+<script src="./lib/bw_libdebug.js"></script>
+<script src="./lib/bw_libgui.js"></script>
+<script src="./lib/rbg_data.js"></script>
+<script src="./lib/rbg_render.js"></script>
+<script src="./src/rbgen.js"></script>
 <script>
-  BGF_BtV_ViewOptions.Templates.OnLoadFinished = BGFOnTemplatesLoaded;
-  BGF_BtV_ViewOptions.Templates.LoadFromFile("/bogenwiki_bgf/src/bgf_btv_templates.html");
-  BGFInit(wgUserName,wgUserGroups,BGF_BtV_DoRender);
-  window.onresize = BGF_BtV_OnWindowRezise;
-  window.addEventListener("storage", (e) => {
-    if (e.key == 'BGF_BTV_Filter') BGF_BtV_CheckCmdFromStorage();
-  });
+  RBG_Init();
 </script>
 </html>

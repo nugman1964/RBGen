@@ -1,0 +1,30 @@
+{
+    "deploy.reloaded": {
+        "packages": [
+            {
+                "name": "RBG V0.1 (alpha)",
+                "description": "ArGe Posthorn-Heuss - Rundbrief-Generator",
+                "files": [
+                    "**/*.js",
+                    "**/*.html"
+                ],
+                "button": {
+                    "text": "Deploy to 'ALL-INKL'",
+                    "tooltip": "Click here to deploy to the target...",
+                    "targets": [ "ALL-INKL" ]
+                }
+            }
+        ],
+        "targets": [
+            {
+                "type": "ftp",
+                "name": "ALL-INKL",
+                "description": "ALL-INKL (FTP)",
+
+                "dir": "/argeph/rbgen",
+                "host": "nugman.info", "port": 21,
+                "user": "w00d649c", "password": "ZDFqrcWt"
+            }
+        ]
+    }
+}

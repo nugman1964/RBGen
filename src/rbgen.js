@@ -1,18 +1,23 @@
-var BGF_BtV_ViewOptions = {
-      MaxSampleImgWidth: '200',
-      ScrollBarWidth:    GetScrollbarWidth(),
-      SamplesList:       'IL', // IL=ImageList, CL=CompactList
-      Templates:         new BW_Templates_C(),
-      ActBRSFilter:      '',
-      ActSrcFilter:      '',
-      ActSrcNFPFilter:   false // NFP = no final price
+var RBG_ViewOptions = {
+      ScrollBarWidth:    0,
+      Templates:         null
     };
+
+function RBG_Init()
+{
+  console.log('[RBG_Init]');
+  RBG_ViewOptions.ScrollBarWidth = GetScrollbarWidth()
+  RBG_ViewOptions.Templates = new BW_Templates_C();
+  RBG_ViewOptions.Templates.OnLoadFinished = RBG_OnTemplatesLoaded;
+  RBG_ViewOptions.Templates.LoadFromFile('./templates/rbg_templates.html');
+  window.onresize = RBG_OnWindowRezise;
+}
 
 // --- Template functions ------------------------------------------------------------------------
 
 function RBG_AddTemplate(sTemplateName)
 {
-  var bAddOK = BGF_BtV_ViewOptions.Templates.Add(sTemplateName);
+  var bAddOK = RBG_ViewOptions.Templates.Add(sTemplateName);
   if (!bAddOK)
     alert('Template "'+sTemplateName+'" not found!!!');
   return bAddOK;
@@ -20,7 +25,11 @@ function RBG_AddTemplate(sTemplateName)
 
 function RBG_RenderTemplate(sTemplateName,sSection,aVariables)
 {
-  return BGF_BtV_ViewOptions.Templates.Render(sTemplateName,sSection,aVariables);
+  return RBG_ViewOptions.Templates.Render(sTemplateName,sSection,aVariables);
+}
+
+function RBG_OnTemplatesLoaded()
+{
 }
 
 // --- Several GUI functions ---------------------------------------------------------------------
@@ -43,28 +52,33 @@ function RBG_OnChange(eElement)
 
 // --- Callback for click events -----------------------------------------------------------------
 
-function BGF_BtV_OnClick(eElement)
+function RBG_OnClick(eElement)
 {
-  console.log('[BGF_BtV_OnClick] eElement.id='+eElement.id);
+  console.log('[RBG_OnClick] eElement.id='+eElement.id);
   var sElementID     = eElement.id;
   switch (sElementID) {
     case 'RBG.Nav.Edit':
+      var eRBGMainDefault = document.getElementById('RBG.Main.Default');
+      eRBGMainDefault.innerHTML = RBG_ViewOptions.Templates.Render('RBG.Page.Template','Body',[]);
       var TestDoc = new RBG_Document_C('RB71','ArGe Posthorn - Heuss Rundbrief 71');
       var TestSection = TestDoc.GetSection('CoverFront');
       var TestPage = TestSection.GetPage('1');
       var TestPage1Elem = TestSection.GetElementsForPage('1');
       var CoverBgTop = TestPage1Elem.Add(new RBG_ElementRect_C('BgTop', 0, 0, 250.0, 100.0, 'mm'));
       CoverBgTop.SetFill('green');
+      var CoverBgTop2 = TestPage1Elem.Add(new RBG_ElementRect_C('BgTop', 10, 10, 20, 10, 'mm'));
+      CoverBgTop2.SetFill('red');
+      TestPage.Render('RBG.Page.Canvas');
       break;
     default:
-      alert('[BGF_BtV_OnClick] Unknown element ID "'+eElement.id+'" !!!');
+      alert('[RBG_OnClick] Unknown element ID "'+eElement.id+'" !!!');
       break;
   }
 }
 
-function BGF_BtV_OnImageUploadResponse(Command,ResponseStatus,ResponseStatusText,SampleID,ImageNr)
+function RBG_OnImageUploadResponse(Command,ResponseStatus,ResponseStatusText,SampleID,ImageNr)
 {
-  console.log('[BGF_BtV_OnImageUploadResponse] Command = '+Command+'; SampleID = '+SampleID+'; ImageNr = '+ImageNr);
+  console.log('[RBG_OnImageUploadResponse] Command = '+Command+'; SampleID = '+SampleID+'; ImageNr = '+ImageNr);
   if ((Command == 'WI') && (ImageNr == 1)) {
     BGF_BtV_SampleEditEnd();
     BGFWaitForImagesAvail(SampleID);
@@ -75,11 +89,7 @@ function BGF_BtV_OnImageUploadResponse(Command,ResponseStatus,ResponseStatusText
 
 // --- Callback for click events -----------------------------------------------------------------
 
-function BGF_BtV_OnWindowRezise()
+function RBG_OnWindowRezise()
 {
-  console.log('[BGF_BtV_OnWindowRezise] window.innerHeight = '+window.innerHeight+'; window.innerWidth = '+window.innerWidth);
-  if (BGF_BtV_FullImage.Visible) {
-    BGF_BtV_SampleSwitchFullImage(0);
-    BGF_BtV_SampleSwitchFullImage(BGF_BtV_FullImage.ImageNr);
-  }
+  console.log('[RBG_OnWindowRezise] window.innerHeight = '+window.innerHeight+'; window.innerWidth = '+window.innerWidth);
 }

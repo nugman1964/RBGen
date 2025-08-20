@@ -79,23 +79,27 @@ function RBG_OnClick(eElement)
       var CoverTitle1 = TestPage1Elem.Add(new RBG_ElementText_C('TitleArGe',nSheetWidth/2,18,0,0,'mm'));
       CoverTitle1.SetText('Arbeitsgemeinschaft');
       CoverTitle1.SetColor('white');
-      CoverTitle1.SetFont('serif', 24, 'px', 'normal', '', 'normal');
+      CoverTitle1.SetFont('serif', 6.35, 'mm', 'normal', '', 'normal');
       CoverTitle1.SetAlign('center');
+      CoverTitle1.SetShadow(2,'black',3,3);
       var CoverTitle2 = TestPage1Elem.Add(new RBG_ElementText_C('TitleArGePH1',nSheetWidth/2,35.6,0,0,'mm'));
       CoverTitle2.SetText('BUND DAUERSERIEN');
       CoverTitle2.SetColor('white');
       CoverTitle2.SetFont('serif', 36, 'px', 'normal', 'bold', 'normal');
       CoverTitle2.SetAlign('center');
+      CoverTitle2.SetShadow(2,'black',3,3);
       var CoverTitle3 = TestPage1Elem.Add(new RBG_ElementText_C('TitleArGePH1',nSheetWidth/2,45.7,0,0,'mm'));
       CoverTitle3.SetText('POSTHORN und HEUSS e.V.');
       CoverTitle3.SetColor('white');
       CoverTitle3.SetFont('serif', 36, 'px', 'normal', 'bold', 'normal');
       CoverTitle3.SetAlign('center');
+      CoverTitle3.SetShadow(2,'black',3,3);
       var CoverTitle4 = TestPage1Elem.Add(new RBG_ElementText_C('TitleBdPh',nSheetWidth/2,60,0,0,'mm'));
       CoverTitle4.SetText('im Bund Deutsche Philatelisten e.V.');
       CoverTitle4.SetColor('white');
       CoverTitle4.SetFont('serif', 24, 'px', 'normal', '', 'normal');
       CoverTitle4.SetAlign('center');
+      CoverTitle4.SetShadow(2,'black',3,3);
       var CoverRBNr = TestPage1Elem.Add(new RBG_ElementText_C('RBNr',210,249.4,0,0,'mm'));
       CoverRBNr.SetText('71');
       CoverRBNr.SetColor('#668C87');
@@ -107,6 +111,7 @@ function RBG_OnClick(eElement)
       CoverRB.SetColor('white');
       CoverRB.SetFont('serif', 36, 'px', 'normal', 'bold', 'normal');
       CoverRB.SetAlign('center');
+      CoverRB.SetShadow(2,'black',3,3);
       // Prepare canvas
       var nCanvasWidth  = TestPage.GetSheetWidth('px',TestRenderOptions.DPI);
       var nRulerWidthPX = TestRenderOptions.Ruler.Width.toUnit('px',TestRenderOptions.DPI);

@@ -58,17 +58,72 @@ function RBG_OnClick(eElement)
   var sElementID     = eElement.id;
   switch (sElementID) {
     case 'RBG.Nav.Edit':
+      // Render template with canvas
       var eRBGMainDefault = document.getElementById('RBG.Main.Default');
       eRBGMainDefault.innerHTML = RBG_ViewOptions.Templates.Render('RBG.Page.Template','Body',[]);
+
+      // Create document
+      var TestRenderOptions = new RBG_RenderOptions_C();
       var TestDoc = new RBG_Document_C('RB71','ArGe Posthorn - Heuss Rundbrief 71');
       var TestSection = TestDoc.GetSection('CoverFront');
       var TestPage = TestSection.GetPage('1');
       var TestPage1Elem = TestSection.GetElementsForPage('1');
-      var CoverBgTop = TestPage1Elem.Add(new RBG_ElementRect_C('BgTop', 0, 0, 250.0, 100.0, 'mm'));
-      CoverBgTop.SetFill('green');
-      var CoverBgTop2 = TestPage1Elem.Add(new RBG_ElementRect_C('BgTop', 10, 10, 20, 10, 'mm'));
-      CoverBgTop2.SetFill('red');
-      TestPage.Render('RBG.Page.Canvas');
+      var nSheetWidth = TestPage.GetSheetWidth('mm');
+      var nSheetHeight = TestPage.GetSheetHeight('mm');
+      var CoverBg = TestPage1Elem.Add(new RBG_ElementRect_C('Background',0,0,nSheetWidth,nSheetHeight,'mm'));
+      CoverBg.SetFill('#44736C');
+      var CoverWnd = TestPage1Elem.Add(new RBG_ElementRect_C('Window', 6,100,nSheetWidth,243-100,'mm'));
+      CoverWnd.SetFill('white');
+      var CoverWndLn = TestPage1Elem.Add(new RBG_ElementRect_C('WindowLine',7,101,nSheetWidth+1,243-100-2,'mm'));
+      CoverWndLn.SetStroke('#66B7AB',0.1,'mm');
+      var CoverTitle1 = TestPage1Elem.Add(new RBG_ElementText_C('TitleArGe',nSheetWidth/2,18,0,0,'mm'));
+      CoverTitle1.SetText('Arbeitsgemeinschaft');
+      CoverTitle1.SetColor('white');
+      CoverTitle1.SetFont('serif', 24, 'px', 'normal', '', 'normal');
+      CoverTitle1.SetAlign('center');
+      var CoverTitle2 = TestPage1Elem.Add(new RBG_ElementText_C('TitleArGePH1',nSheetWidth/2,35.6,0,0,'mm'));
+      CoverTitle2.SetText('BUND DAUERSERIEN');
+      CoverTitle2.SetColor('white');
+      CoverTitle2.SetFont('serif', 36, 'px', 'normal', 'bold', 'normal');
+      CoverTitle2.SetAlign('center');
+      var CoverTitle3 = TestPage1Elem.Add(new RBG_ElementText_C('TitleArGePH1',nSheetWidth/2,45.7,0,0,'mm'));
+      CoverTitle3.SetText('POSTHORN und HEUSS e.V.');
+      CoverTitle3.SetColor('white');
+      CoverTitle3.SetFont('serif', 36, 'px', 'normal', 'bold', 'normal');
+      CoverTitle3.SetAlign('center');
+      var CoverTitle4 = TestPage1Elem.Add(new RBG_ElementText_C('TitleBdPh',nSheetWidth/2,60,0,0,'mm'));
+      CoverTitle4.SetText('im Bund Deutsche Philatelisten e.V.');
+      CoverTitle4.SetColor('white');
+      CoverTitle4.SetFont('serif', 24, 'px', 'normal', '', 'normal');
+      CoverTitle4.SetAlign('center');
+      var CoverRBNr = TestPage1Elem.Add(new RBG_ElementText_C('RBNr',210,249.4,0,0,'mm'));
+      CoverRBNr.SetText('71');
+      CoverRBNr.SetColor('#668C87');
+      CoverRBNr.SetFont('serif', 250, 'px', 'normal', 'bold', 'normal');
+      CoverRBNr.SetAlign('right');
+      CoverRBNr.SetBaseline('hanging');
+      var CoverRB = TestPage1Elem.Add(new RBG_ElementText_C('RB',nSheetWidth/2,270,0,0,'mm'));
+      CoverRB.SetText('Rundbrief 71 - April 2025');
+      CoverRB.SetColor('white');
+      CoverRB.SetFont('serif', 36, 'px', 'normal', 'bold', 'normal');
+      CoverRB.SetAlign('center');
+      // Prepare canvas
+      var nCanvasWidth  = TestPage.GetSheetWidth('px',TestRenderOptions.DPI);
+      var nRulerWidthPX = TestRenderOptions.Ruler.Width.toUnit('px',TestRenderOptions.DPI);
+      nCanvasWidth += (TestRenderOptions.Ruler.ShowLeft ? nRulerWidthPX : 0);
+      nCanvasWidth += (TestRenderOptions.Ruler.ShowRight ? nRulerWidthPX : 0);
+      var nCanvasHeight = TestPage.GetSheetHeight('px',TestRenderOptions.DPI);
+      nCanvasHeight += (TestRenderOptions.Ruler.ShowTop ? nRulerWidthPX : 0);
+      nCanvasHeight += (TestRenderOptions.Ruler.ShowBottom ? nRulerWidthPX : 0);
+      var ePageDiv = document.getElementById('RBG.Page.Div');
+      ePageDiv.style.width = nCanvasWidth+'px';
+      ePageDiv.style.height = nCanvasHeight+'px';
+      var ePageCanvas = document.getElementById('RBG.Page.Canvas');
+      ePageCanvas.width = nCanvasWidth;
+      ePageCanvas.height = nCanvasHeight;
+      // Render page
+      TestPage.Render('RBG.Page.Canvas',TestRenderOptions);
+
       break;
     default:
       alert('[RBG_OnClick] Unknown element ID "'+eElement.id+'" !!!');

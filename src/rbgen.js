@@ -77,9 +77,13 @@ function RBG_OnClick(eElement)
       var CoverWndLn = TestPage1Elem.Add(new RBG_ElementRect_C('WindowLine',11,101,nSheetWidth+1,243-100-2,'mm'));
       CoverWndLn.SetStroke('#66B7AB',0.1,'mm');
       var CoverMiNr130 = TestPage1Elem.Add(new RBG_ElementImage_C('MiNr. 130',10,10,70,83.5,'mm'));
-      CoverMiNr130.SetFilename('./img/MiNr130.SW.jpg');
+      CoverMiNr130.SetFilename('./img/MiNr130.SW.001.jpg');
+      CoverMiNr130.SetOpacity('10%');
+      CoverMiNr130.SetCompositeOperation('lighter');
       var CoverMiNr186 = TestPage1Elem.Add(new RBG_ElementImage_C('MiNr. 186',nSheetWidth-67-10,10,70,83.5,'mm'));
-      CoverMiNr186.SetFilename('./img/MiNr186.SW.jpg');
+      CoverMiNr186.SetFilename('./img/MiNr186.SW.001.jpg');
+      CoverMiNr186.SetOpacity('10%');
+      CoverMiNr186.SetCompositeOperation('lighter');
       var CoverTitle1 = TestPage1Elem.Add(new RBG_ElementText_C('TitleArGe',nSheetWidth/2,18,0,0,'mm'));
       CoverTitle1.SetText('Arbeitsgemeinschaft');
       CoverTitle1.SetColor('white');
